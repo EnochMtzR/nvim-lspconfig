@@ -93,7 +93,7 @@ return {
     -- manager lock file.
     local root_markers = { 'package-lock.json', 'yarn.lock', 'pnpm-lock.yaml', 'bun.lockb', 'bun.lock' }
     -- Give the root markers equal priority by wrapping them in a table
-    root_markers = vim.fn.has('nvim-0.11.3') == 1 and { root_markers } or root_markers
+    root_markers = vim.version():__tostring() == '0.11.3' and { root_markers } or root_markers
     local project_root = vim.fs.root(bufnr, root_markers)
     if not project_root then
       return
@@ -106,7 +106,7 @@ return {
     -- We keep this for backward compatibility.
     local filename = vim.api.nvim_buf_get_name(bufnr)
     local eslint_config_files_with_package_json =
-      util.insert_package_json(eslint_config_files, 'eslintConfig', filename)
+        util.insert_package_json(eslint_config_files, 'eslintConfig', filename)
     local is_buffer_using_eslint = vim.fs.find(eslint_config_files_with_package_json, {
       path = filename,
       type = 'file',
